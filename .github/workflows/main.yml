@@ -1,12 +1,13 @@
 name: Build Flutter APK
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
+on: [push, pull_request, workflow_dispatch]
+  
 
 jobs:
+  # Todo: perform tests
   build:
+    name: Build APK
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
