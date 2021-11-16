@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       floatingActionButton: FloatingActionButton.extended(
         label: Text(fabLabels[_index].toString()),
         icon: const Icon(Icons.add_sharp),
-        onPressed: () => print("Pressed $_index")
+        onPressed: () => {}
       ),
     );
   }
