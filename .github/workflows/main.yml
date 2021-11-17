@@ -1,13 +1,14 @@
 name: Build Flutter APK
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    tags:
+      - "v*.*.*"
   
 
 jobs:
-  # Todo: perform tests
-  build:
-    name: Build APK
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+  release:
+    name: Release APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -28,28 +29,8 @@ jobs:
         
       - name: Build APK
         run: flutter build apk
-      
-      - name: Create release
-        uses: ShaunLWM/action-release-debugapk@0.0.6
-        env:
-          GITHUB_TOKEN: ${{ secrets.release }}
-          APP_FOLDER: "build/app/outputs/apk/release"
-          RELEASE_TITLE: New Build
-        
-     # - name: Upload APK artifacts
-      #  uses: actions/upload-artifact@v2.2.4
-       # with:
-        #  name: APK
-         # path: "build/app/outputs/apk/release/app-release.apk"
-    
-  #release:
-   # name: Release APK
-    #needs: build
-    #runs-on: ubuntu-latest
-    #steps:
-     # - name: Obtain APK
-      #  uses: actions/download-artifact@v2.0.10
-       # with:
-        #  name: APK
-      
-      
+  
+      - name: Release APK
+        uses: softprops/action-gh-release@v0.1.14
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
