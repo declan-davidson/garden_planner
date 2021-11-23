@@ -7,7 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
-  static const List<Tab> _tabs = [Tab(text: "Plans"), Tab(text: "Exchange")];
+  static const List<Tab> _tabs = [Tab(text: "My Garden"), Tab(text: "Exchange")];
   List<String> fabLabels = ["Create", "List"];
   late TabController _tabController;
   int _index = 0;
@@ -47,57 +46,83 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return Scaffold(
       appBar: AppBar(
         title: const Text("Garden Planner"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.green,
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
         bottom: TabBar(
           controller: _tabController,
-          labelColor: Colors.green,
-          unselectedLabelColor: Colors.green,
-          indicatorColor: Colors.green,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white,
+          indicatorColor: Colors.white,
           tabs: _tabs
         )
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          Column(
-            children: [
-              Card(
-                color: Colors.grey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    ListTile(
-                      title: Text("Title 1"),
-                      subtitle: Text("Subtitle 1")
+          SizedBox(
+            height: 800,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 200,
+                  child: Card(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                        const ListTile(
+                          title: Text("Harvest"), 
+                          subtitle: Text("Next up: {crop}")
+                        )
+                      ],
                     )
-                  ],
-                )
-              ),
-              Card(
-                color: Colors.green,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    ListTile(
-                      title: Text("Title 2"),
-                      subtitle: Text("Subtitle 2")
+                  )
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Card(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                        const ListTile(
+                          title: Text("Plan"), 
+                          subtitle: Text("{freeArea}m2 available")
+                        )
+                      ],
                     )
-                  ],
-                )
-              )
-            ],
+                  )
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Card(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                        const ListTile(
+                          title: Text("Recipe"), 
+                          subtitle: Text("Why not try {dish}?")
+                        )
+                      ],
+                    )
+                  )
+                ),
+              ]
+            )
           ),
-          const Center(
-            child: Text("Tab 2")
+          Scaffold(
+            floatingActionButton: FloatingActionButton.extended(
+              label: const Text("List"),
+              icon: const Icon(Icons.add_sharp),
+              onPressed: () => {}
+            ),
           )
         ]
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text(fabLabels[_index].toString()),
-        icon: const Icon(Icons.add_sharp),
-        onPressed: () => {}
-      ),
+      )
     );
   }
 }
