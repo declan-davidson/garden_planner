@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                           const ListTile(
                             title: Text("Harvest"), 
                             subtitle: Text("Next up: {crop}")
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          Image.asset("plan.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                           const ListTile(
                             title: Text("Plan"), 
                             subtitle: Text("{freeArea}m2 available")
@@ -107,9 +107,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          Image.asset("recipe.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                           const ListTile(
-                            title: Text("Recipe"), 
+                            title: Text("Recipes"), 
                             subtitle: Text("Why not try {dish}?")
                           )
                         ],
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          Image.asset("env_imp.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                           const ListTile(
                             title: Text("Environmental Impact"), 
                             subtitle: Text("How's my carbon footprint?")
