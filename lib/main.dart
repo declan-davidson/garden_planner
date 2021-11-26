@@ -60,58 +60,83 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         controller: _tabController,
         children: [
           SizedBox(
-            height: 800,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: Card(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
-                        const ListTile(
-                          title: Text("Harvest"), 
-                          subtitle: Text("Next up: {crop}")
-                        )
-                      ],
+            height: 1000,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListView(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10)
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          const ListTile(
+                            title: Text("Harvest"), 
+                            subtitle: Text("Next up: {crop}")
+                          )
+                        ],
+                      )
                     )
-                  )
-                ),
-                SizedBox(
-                  height: 200,
-                  child: Card(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
-                        const ListTile(
-                          title: Text("Plan"), 
-                          subtitle: Text("{freeArea}m2 available")
-                        )
-                      ],
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          const ListTile(
+                            title: Text("Plan"), 
+                            subtitle: Text("{freeArea}m2 available")
+                          )
+                        ],
+                      )
                     )
-                  )
-                ),
-                SizedBox(
-                  height: 200,
-                  child: Card(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
-                        const ListTile(
-                          title: Text("Recipe"), 
-                          subtitle: Text("Why not try {dish}?")
-                        )
-                      ],
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          const ListTile(
+                            title: Text("Recipe"), 
+                            subtitle: Text("Why not try {dish}?")
+                          )
+                        ],
+                      )
                     )
-                  )
-                ),
-              ]
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.network("https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg", height: 128, width: double.infinity, fit: BoxFit.none),
+                          const ListTile(
+                            title: Text("Environmental Impact"), 
+                            subtitle: Text("How's my carbon footprint?")
+                          )
+                        ],
+                      )
+                    )
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 10)
+                  ),
+                ]
+              )
             )
           ),
           Scaffold(
