@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:garden_planner/environment_page.dart';
+import 'package:garden_planner/harvest_page.dart';
+import 'package:garden_planner/plan_page.dart';
+import 'package:garden_planner/recipes_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,68 +72,113 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   const Padding(
                     padding: EdgeInsets.only(top: 10)
                   ),
-                  SizedBox(
+                  SizedBox( // > HARVEST
                     height: 200,
                     child: Card(
                       color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
-                          const ListTile(
-                            title: Text("Harvest"), 
-                            subtitle: Text("Next up: {crop}")
-                          )
-                        ],
-                      )
+                      // > Marty 
+                      child: new InkWell(
+                        onTap: (){
+                          // # test - prints in command line print("tapped");
+                          Navigator.push(context, new MaterialPageRoute(
+                            builder: (context) => HarvestPage()
+                            )
+                          ); 
+                        },
+                        // <  
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                            const ListTile(
+                              title: Text("Harvest"), 
+                              subtitle: Text("Next up: {crop}")
+                            )
+                          ],
+                        ) // column
+                      ) // inkwell
                     )
                   ),
-                  SizedBox(
+                  SizedBox( // > PLANNING 
                     height: 200,
                     child: Card(
                       color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset("plan.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
-                          const ListTile(
-                            title: Text("Plan"), 
-                            subtitle: Text("{freeArea}m2 available")
-                          )
-                        ],
-                      )
+                      // > Marty 
+                      child: new InkWell(
+                        onTap: (){
+                          // # test - prints in command line print("tapped");
+                          Navigator.push(context, new MaterialPageRoute(
+                            builder: (context) => PlanPage()
+                            )
+                          ); // Navigator.push
+                        },
+                        // <  
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("plan.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                            const ListTile(
+                              title: Text("Plan"), 
+                              subtitle: Text("{freeArea}m2 available")
+                            )
+                          ],
+                        ) // Column
+                      ) // Inkwell
                     )
                   ),
-                  SizedBox(
+                  SizedBox( // > RECIPES 
                     height: 200,
                     child: Card(
                       color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset("recipe.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
-                          const ListTile(
-                            title: Text("Recipes"), 
-                            subtitle: Text("Why not try {dish}?")
-                          )
-                        ],
-                      )
+                      // > Marty 
+                      child: new InkWell(
+                        onTap: (){
+                          // # test - prints in command line print("tapped");
+                          Navigator.push(context, new MaterialPageRoute(
+                            builder: (context) => RecipesPage()
+                            )
+                          ); // Navigator.push
+                        },
+                        // <  
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("recipe.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                            const ListTile(
+                              title: Text("Recipes"), 
+                              subtitle: Text("Why not try {dish}?")
+                            )
+                          ],
+                        ) // Column
+                      ) // Inkwell
                     )
                   ),
-                  SizedBox(
+                  SizedBox( // > ENVIRONMENT 
                     height: 200,
                     child: Card(
                       color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset("env_imp.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
-                          const ListTile(
-                            title: Text("Environmental Impact"), 
-                            subtitle: Text("How's my carbon footprint?")
-                          )
-                        ],
-                      )
+
+                      // > Marty 
+                      child: new InkWell(
+                        onTap: (){
+                          // # test - prints in command line print("tapped");
+                          Navigator.push(context, new MaterialPageRoute(
+                            builder: (context) => EnvironmentPage()
+                            )
+                          ); // Navigator.push
+                        },
+                      // <  
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset("env_imp.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                            const ListTile(
+                              title: Text("Environmental Impact hello world"), 
+                              subtitle: Text("How's my carbon footprint?"),
+                            )
+                          ],
+                        )
+                      ) // Inkwell makes the card clickable                    
                     )
                   ),
                   const Padding(
