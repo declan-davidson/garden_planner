@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'environment_info.dart';
 // class EnvironmentPage extends StatelessWidget{
 
 //     const EnvironmentPage({Key? key}) : super(key: key);
@@ -165,10 +166,29 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                             ]
                         )
                     ), //),
-                    Container(
-                        color: Colors.blue,
-                        width: 48.0,
-                        height: 10.0
+                    // Container(
+
+                    //     color: Colors.green,
+                    //     width: 60.0,
+                    //     height: 20.0,
+                    //     child : Text("Learn More!",
+                    //     style: TextStyle(
+                    //         fontWeight: FontWeight.bold ,
+                    //         color: Colors.white)
+                    //     )
+                    // ),
+                    TextButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                        ),
+                        onPressed: () { 
+                            Navigator.push(context, new MaterialPageRoute(
+                            builder: (context) => EnvironmentPage()
+                            ) // Material page route
+                          ); // Navigator.push
+                        },
+                        child: Text('Learn More!'),
                     ),
                     Container(
                         child:
@@ -237,6 +257,85 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                                         CropData('Processing', 0.1),
                                         CropData('Packaging', 0.3),
                                         CropData('Transport', 0.4)
+                                    ],
+                                    xValueMapper: (CropData emissions, _) => emissions.stage,
+                                    yValueMapper: (CropData emissions, _) => emissions.emissions,
+                                    markerSettings: MarkerSettings(
+                                        isVisible: true,
+                                        shape: DataMarkerType.diamond
+                                    ),
+                                    name: 'Buying from Shop'
+                                )
+                            ]
+                        )
+                    ),
+                        Container(
+                        child:
+                            
+                            SfCartesianChart(
+
+                                title: ChartTitle(
+                                text: 'Environmental Impact (Leeks)',
+                            
+                                textStyle: TextStyle(
+                                
+                                fontFamily: 'Roboto',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 20,
+                            )
+                            ),
+                            // Enables the tooltip for all the series in chart
+                            
+                            tooltipBehavior: _tooltipBehavior,
+                            zoomPanBehavior: _zoomPanBehavior,
+
+                            // Initialize category axis
+                            primaryXAxis: CategoryAxis(
+                            title: AxisTitle(text:'Stage of growth')
+                            ),
+                            primaryYAxis: NumericAxis(
+                            title: AxisTitle(text:'Emissions (kg of CO2 per kg)')
+                            ),
+                            palette: <Color>[
+                                Colors.green,
+                                Colors.red
+                            ],
+                            legend: Legend(
+                            isVisible: true
+                            ),
+                            series: <ChartSeries>[
+                                // Initialize line series
+                                LineSeries<CropData, String>(
+                                    // Enables the tooltip for individual series
+                                    enableTooltip: true, 
+                                    selectionBehavior: _selectionBehavior,
+                                    animationDuration: 6000,
+                                    dataSource: [
+                                        // Bind data source
+                                        CropData('Farming', 0.1),
+                                        CropData('Processing', 0.1),
+                                        CropData('Packaging', 0),
+                                        CropData('Transport', 0)
+                                    ],
+                                    xValueMapper: (CropData emissions, _) => emissions.stage,
+                                    yValueMapper: (CropData emissions, _) => emissions.emissions,
+                                    markerSettings: MarkerSettings(
+                                        isVisible: true,
+                                        shape: DataMarkerType.diamond
+                                    ),
+                                    name: 'Growing in Garden'
+                                ),
+                                LineSeries<CropData, String>(
+                                    // Enables the tooltip for individual series
+                                    enableTooltip: true, 
+                                    selectionBehavior: _selectionBehavior,
+                                    animationDuration: 6000,
+                                    dataSource: [
+                                        // Bind data source
+                                        CropData('Farming', 0.3),
+                                        CropData('Processing', 0.1),
+                                        CropData('Packaging', 0.2),
+                                        CropData('Transport', 0.2)
                                     ],
                                     xValueMapper: (CropData emissions, _) => emissions.stage,
                                     yValueMapper: (CropData emissions, _) => emissions.emissions,
