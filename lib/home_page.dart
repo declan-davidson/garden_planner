@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'card.dart';
+import 'exchange.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,39 +37,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Garden Planner"),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white,
-          indicatorColor: Colors.white,
-          tabs: _tabs
-        )
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
+        appBar: AppBar(
+            title: const Text("Garden Planner"),
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            bottom: TabBar(
+                controller: _tabController,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white,
+                indicatorColor: Colors.white,
+                tabs: _tabs)),
+        body: TabBarView(controller: _tabController, children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: ListView.builder(
-              itemCount: cards.length,
-              itemBuilder: (BuildContext c, int i) {
-                return createTappableCard(context, cards[i]);
-              }
-            )
-          ),
-          Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-              label: const Text("List"),
-              icon: const Icon(Icons.add_sharp),
-              onPressed: () => {}
-            ),
-          )
-        ]
-      )
-    );
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: ListView.builder(
+                  itemCount: cards.length,
+                  itemBuilder: (BuildContext c, int i) {
+                    return createTappableCard(context, cards[i]);
+                  })),
+          Exchange()
+        ]));
   }
 }
