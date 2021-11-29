@@ -70,7 +70,7 @@ class _ExchangeState extends State<Exchange>{
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset("harvest.png", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                 const ListTile(
                   title: Text("Vegetable", style: TextStyle(fontWeight: FontWeight.bold)), 
                   subtitle: Text("Specific location")
@@ -86,7 +86,7 @@ class _ExchangeState extends State<Exchange>{
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset("harvest.png", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
+                Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                 const ListTile(
                   title: Text("Another vegetable", style: TextStyle(fontWeight: FontWeight.bold)), 
                   subtitle: Text("Specific location 2")
