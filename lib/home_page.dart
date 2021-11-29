@@ -10,19 +10,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   static const List<Tab> _tabs = [Tab(text: "My Garden"), Tab(text: "Exchange")];
-  List<CardDefinition> cards = [
-    CardDefinition("Harvest", "Next up: {crop}", "harvest.jpg", "harvest", true),
-    CardDefinition("Plan", "freeArea}m2 available", "plan.jpg", "plan", false),
-    CardDefinition("Recipes", "Why not try {dish}?", "recipe.jpg", "recipes", true),
-    CardDefinition("Environmental Impact", "How's my carbon footprint?", "env_imp.jpg", "environmental_impact", false)];
   late TabController _tabController;
-  bool _carrotsPlanted = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: _tabs.length);
-  }
+  bool _carrotsPlanted = false; //To keep track of whether carrots have been planted
+  late List<CardDefinition> cards;
 
   bool getCarrotsPlanted(){
     return _carrotsPlanted;
@@ -30,6 +20,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void toggleCarrotsPlanted(){
     _carrotsPlanted = !_carrotsPlanted;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: _tabs.length);
+    cards = [
+    CardDefinition("Harvest", "Next up: {crop}", "harvest.jpg", "harvest", true, getCarrotsPlanted: getCarrotsPlanted),
+    CardDefinition("Plan", "freeArea}m2 available", "plan.jpg", "plan", false, getCarrotsPlanted: getCarrotsPlanted, toggleCarrotsPlanted: toggleCarrotsPlanted),
+    CardDefinition("Recipes", "Why not try {dish}?", "recipe.jpg", "recipes", true, getCarrotsPlanted: getCarrotsPlanted),
+    CardDefinition("Environmental Impact", "How's my carbon footprint?", "env_imp.jpg", "environmental_impact", false)];
   }
 
   @override
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             child: ListView.builder(
               itemCount: cards.length,
               itemBuilder: (BuildContext c, int i) {
-                return createTappableCard(context, cards[i], getterCallback: getCarrotsPlanted, togglerCallback: toggleCarrotsPlanted);
+                return createTappableCard(context, cards[i]);
               }
             )
           ),

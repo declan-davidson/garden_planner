@@ -13,57 +13,65 @@ class ExpandedCardListItem {
   }
 }
 
-List<ExpandedCardListItem> noCarrotHarvestItems = [
-  ExpandedCardListItem("Potatoes", "Harvest on June 1st", "somePath")
-];
+List<ExpandedCardListItem> getListItems(card){
+  List<ExpandedCardListItem> listItems = [];
 
-List<ExpandedCardListItem> noCarrotRecipeItems = [
-  ExpandedCardListItem("Dauphinoise potatoes", "Requires potatoes", "somePath"),
-  ExpandedCardListItem("Potato and leek soup", "Requires potatoes, leeks", "somePath")
-];
+  List<ExpandedCardListItem> noCarrotHarvestItems = [
+    ExpandedCardListItem("Potatoes", "Harvest on June 1st", "somePath")
+  ];
 
-List<ExpandedCardListItem> carrotHarvestItems = [
-  ExpandedCardListItem("Carrots", "Harvest on May 15th", "somePath")
-] + noCarrotHarvestItems;
+  List<ExpandedCardListItem> noCarrotRecipeItems = [
+    ExpandedCardListItem("Dauphinoise potatoes", "Requires potatoes", "somePath"),
+    ExpandedCardListItem("Potato and leek soup", "Requires potatoes, leeks", "somePath")
+  ];
 
-List<ExpandedCardListItem> carrotRecipeItems = [
-  ExpandedCardListItem("Carrot cake", "Requires carrots", "somePath"),
-  ExpandedCardListItem("Chicken casserole", "Requires carrots, potatoes", "somePath")
-] + noCarrotRecipeItems;
+  List<ExpandedCardListItem> carrotHarvestItems = [
+    ExpandedCardListItem("Carrots", "Harvest on May 15th", "somePath")
+  ] + noCarrotHarvestItems;
+
+  List<ExpandedCardListItem> carrotRecipeItems = [
+    ExpandedCardListItem("Carrot cake", "Requires carrots", "somePath"),
+    ExpandedCardListItem("Chicken casserole", "Requires carrots, potatoes", "somePath")
+  ] + noCarrotRecipeItems;
+
+  if(card.id == "harvest"){
+    if(card.getCarrotsPlanted!()){
+      listItems = carrotHarvestItems;
+    }
+    else{
+      listItems = noCarrotHarvestItems;
+    }
+  }
+  else if(card.id == "recipes"){
+    if(card.getCarrotsPlanted!()){
+      listItems = carrotRecipeItems;
+    }
+    else{
+      listItems = noCarrotRecipeItems;
+    }
+  }
+
+  return listItems;
+}
 
 class CardDefinition {
   String title, subtitle, imagePath, id;
   bool expandable;
+  bool Function()? getCarrotsPlanted;
+  VoidCallback? toggleCarrotsPlanted;
 
-  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable);
+  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable, {this.getCarrotsPlanted, this.toggleCarrotsPlanted});
 }
 
 class ExpandedCard extends StatelessWidget {
   final CardDefinition card;
-  bool carrotsPlanted;
 
-  ExpandedCard(this.card, this.carrotsPlanted, {Key? key}) : super(key: key);
+  ExpandedCard(this.card, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context){
-    List<ExpandedCardListItem> listItems = [];
-    if(card.id == "harvest"){
-      if(carrotsPlanted){
-        listItems = carrotHarvestItems;
-      }
-      else{
-        listItems = noCarrotHarvestItems;
-      }
-    }
-    else if(card.id == "recipes"){
-      if(carrotsPlanted){
-        listItems = carrotRecipeItems;
-      }
-      else{
-        listItems = noCarrotRecipeItems;
-      }
-    }
-
+    List<ExpandedCardListItem> listItems = getListItems(card);
+    
     //A structural widget that displays full screen minus OS items like the status bar
     return SafeArea(
       child: Scaffold(
@@ -111,7 +119,7 @@ class ExpandedCard extends StatelessWidget {
   }
 }
 
-GestureDetector createTappableCard(BuildContext context, CardDefinition card, {bool Function()? getterCallback, VoidCallback? togglerCallback}) {
+GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
   var onTap = () => Navigator.push(context, PageTransition(child: _PlaceHolderPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
 
   List<Widget> cardBody = [
@@ -123,7 +131,7 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card, {b
   ];
 
   if(card.expandable){
-    onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => ExpandedCard(card, (getterCallback != null ? getterCallback() : false))));
+    onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => ExpandedCard(card)));
 
     //Have card use Hero transition
     cardBody[0] = Hero(
@@ -133,11 +141,11 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card, {b
   }
 
   if(card.id == "plan"){
-    onTap = () => Navigator.push(context, PageTransition(child: PlanPage(getterCallback != null ? getterCallback : () => false ,togglerCallback != null ? togglerCallback : () => {}), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
+    onTap = () => Navigator.push(context, PageTransition(child: PlanPage(card), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
   }
 
   //Callback prop is probably not needed; remove later
-  return TappableCard(
+  return GestureDetector(
     child: SizedBox(
       height: 200,
       child: Card(
@@ -149,14 +157,7 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card, {b
       )
     ),
     onTap: onTap,
-    callback: getterCallback,
   );
-}
-
-class TappableCard extends GestureDetector{
-  Function? callback;
-
-  TappableCard({Widget? child, var onTap, Key? key, this.callback}) : super(key: key, child: child, onTap: onTap);
 }
 
 class _PlaceHolderPage extends StatelessWidget{
