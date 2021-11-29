@@ -38,8 +38,9 @@ late SelectionBehavior _selectionBehavior;
 
 class EnvironmentPage extends StatefulWidget {
 
+
     
-        
+
     @override
     _InteractiveGraphState createState() => _InteractiveGraphState();
 }
@@ -47,6 +48,12 @@ class EnvironmentPage extends StatefulWidget {
 class _InteractiveGraphState extends State<EnvironmentPage> {
 
     //final List<ListItem> items;
+
+    String printText (String text) {
+        print(text);
+        return 'Hello $text';
+    }     
+
 
    @override
     void initState(){
@@ -85,7 +92,7 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                             SfCartesianChart(
 
                                 title: ChartTitle(
-                                text: 'Environmental Impact  Growth',
+                                text: 'Environmental Impact(Tomatoes)',
                             
                                 textStyle: TextStyle(
                                 
@@ -104,7 +111,91 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                             title: AxisTitle(text:'Stage of growth')
                             ),
                             primaryYAxis: NumericAxis(
-                            title: AxisTitle(text:'Emissions (kg of CO2 per kg of Tomatoes)')
+                            title: AxisTitle(text:'Emissions (kg of CO2 per kg)')
+                            ),
+                            palette: <Color>[
+                                Colors.green,
+                                Colors.red
+                            ],
+                            legend: Legend(
+                            isVisible: true
+                            ),
+                            series: <ChartSeries>[
+                                // Initialize line series
+                                LineSeries<CropData, String>(
+                                    // Enables the tooltip for individual series
+                                    enableTooltip: true, 
+                                    selectionBehavior: _selectionBehavior,
+                                    animationDuration: 6000,
+                                    dataSource: [
+                                        // Bind data source
+                                        CropData('Farming', 0.2),
+                                        CropData('Processing', 0),
+                                        CropData('Packaging', 0),
+                                        CropData('Transport', 0)
+                                    ],
+                                    xValueMapper: (CropData emissions, _) => emissions.stage,
+                                    yValueMapper: (CropData emissions, _) => emissions.emissions,
+                                    markerSettings: MarkerSettings(
+                                        isVisible: true,
+                                        shape: DataMarkerType.diamond
+                                    ),
+                                    name: 'Growing in Garden'
+                                ),
+                                LineSeries<CropData, String>(
+                                    // Enables the tooltip for individual series
+                                    enableTooltip: true, 
+                                    selectionBehavior: _selectionBehavior,
+                                    animationDuration: 6000,
+                                    dataSource: [
+                                        // Bind data source
+                                        CropData('Farming', 0.3),
+                                        CropData('Processing', 0.2),
+                                        CropData('Packaging', 0.1),
+                                        CropData('Transport', 0.5)
+                                    ],
+                                    xValueMapper: (CropData emissions, _) => emissions.stage,
+                                    yValueMapper: (CropData emissions, _) => emissions.emissions,
+                                    markerSettings: MarkerSettings(
+                                        isVisible: true,
+                                        shape: DataMarkerType.diamond
+                                    ),
+                                    name: 'Buying from Shop'
+                                )
+                            ]
+                        )
+                    ), //),
+                    Container(
+                        color: Colors.blue,
+                        width: 48.0,
+                        height: 10.0
+                    ),
+                    Container(
+                        child:
+                            
+                            SfCartesianChart(
+
+                                title: ChartTitle(
+                                text: 'Environmental Impact (Potatoes)',
+                            
+                                textStyle: TextStyle(
+                                
+                                fontFamily: 'Roboto',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 20,
+                            )
+                            ),
+                            // Enables the tooltip for all the series in chart
+                            
+                            tooltipBehavior: _tooltipBehavior,
+                            zoomPanBehavior: _zoomPanBehavior,
+
+                            // Initialize category axis
+                            primaryXAxis: CategoryAxis(
+                            title: AxisTitle(text:'Stage of growth')
+                            ),
+                            primaryYAxis: NumericAxis(
+                            title: AxisTitle(text:'Emissions (kg of CO2 per kg)')
                             ),
                             palette: <Color>[
                                 Colors.green,
@@ -142,10 +233,10 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                                     animationDuration: 6000,
                                     dataSource: [
                                         // Bind data source
-                                        CropData('Farming', 0.3),
-                                        CropData('Processing', 0.2),
-                                        CropData('Packaging', 0.1),
-                                        CropData('Transport', 0.5)
+                                        CropData('Farming', 0.4),
+                                        CropData('Processing', 0.1),
+                                        CropData('Packaging', 0.3),
+                                        CropData('Transport', 0.4)
                                     ],
                                     xValueMapper: (CropData emissions, _) => emissions.stage,
                                     yValueMapper: (CropData emissions, _) => emissions.emissions,
@@ -157,18 +248,33 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                                 )
                             ]
                         )
-                    ), //),
+                    ),
                     Container(
-                        color: Colors.amber[600],
+                        color: Colors.red[600],
                         width: 48.0,
-                        height: 48.0
-                    )  
+                        height: 10.0
+                    ),
+                    Container(
+                        color: Colors.green,
+                        child: Text(printText("Hello")) 
+                    )
                 ]
             )     
         )
         );
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /// The base class for the different types of items the list can contain.
 abstract class ListItem {
