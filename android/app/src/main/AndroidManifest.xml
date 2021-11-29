@@ -3,6 +3,7 @@
    <application
         android:label="garden_planner"
         android:icon="@mipmap/ic_launcher">
+          <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAn2UvMnFjZCgB3o5fQWOvoIFRIc_N_WDU"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
