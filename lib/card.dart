@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:garden_planner/environment_info.dart';
 import 'package:page_transition/page_transition.dart';
 import 'plan.dart';
 
@@ -53,6 +54,9 @@ List<ExpandedCardListItem> getListItems(card){
 
   return listItems;
 }
+
+// > Marty
+import 'package:garden_planner/environment_page.dart';
 
 class CardDefinition {
   String title, subtitle, imagePath, id;
@@ -155,11 +159,16 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
     );
   }
 
+
+  if(card.title == "Environmental Impact"){
+    onTap = () => Navigator.push(context, PageTransition(child: EnvironmentPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
+    //onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => InteractiveGraph() ));
+  }
+
   if(card.id == "plan"){
     onTap = () => Navigator.push(context, PageTransition(child: PlanPage(card), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
   }
 
-  //Callback prop is probably not needed; remove later
   return GestureDetector(
     child: SizedBox(
       height: 200,
