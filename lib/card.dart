@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:garden_planner/environment_info.dart';
 import 'package:page_transition/page_transition.dart';
 
 // > Marty
@@ -78,7 +79,7 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
   // > Marty
   if(card.title == "Environmental Impact"){
 
-    onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => EnvironmentPage() ));
+    onTap = () => Navigator.push(context, PageTransition(child: EnvironmentPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
     //onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => InteractiveGraph() ));
 
     // //Have card use Hero transition
