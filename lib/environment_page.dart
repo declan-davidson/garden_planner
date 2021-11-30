@@ -157,16 +157,7 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                   )
                 ]
               ),
-              TextButton(
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                ),
-                onPressed: () { 
-                  Navigator.push(context, PageTransition(child: EnvironmentInfo(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200))); // Navigator.push
-                },
-                child: const Text('Learn More!'),
-              ),
+        
               SfCartesianChart(
                 title: ChartTitle(
                   text: 'Environmental Impact (Potatoes)',
@@ -306,7 +297,17 @@ class _InteractiveGraphState extends State<EnvironmentPage> {
                     name: 'Buying from Shop'
                   )
                 ]
-              )
+              ),
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                ),
+                onPressed: () { 
+                  Navigator.push(context, PageTransition(child: EnvironmentInfo(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200))); // Navigator.push
+                },
+                child: const Text('Learn More!'),
+              ),
             ]
           )
         )
