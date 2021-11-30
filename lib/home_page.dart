@@ -20,7 +20,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   void toggleCarrotsPlanted(){
-    _carrotsPlanted = !_carrotsPlanted;
+    setState(() {
+      _carrotsPlanted = !_carrotsPlanted;
+    });
   }
 
   @override
@@ -28,9 +30,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
     _tabController = TabController(vsync: this, length: _tabs.length);
     cards = [
-    CardDefinition("Harvest", "Next up: {crop}", "harvest.jpg", "harvest", true, getCarrotsPlanted: getCarrotsPlanted),
-    CardDefinition("Plan", "freeArea}m2 available", "plan.jpg", "plan", false, getCarrotsPlanted: getCarrotsPlanted, toggleCarrotsPlanted: toggleCarrotsPlanted),
-    CardDefinition("Recipes", "Why not try {dish}?", "recipe.jpg", "recipes", true, getCarrotsPlanted: getCarrotsPlanted),
+    CardDefinition("Harvest", "Next up: potatoes on June 1st", "harvest.jpg", "harvest", true, getCarrotsPlanted: getCarrotsPlanted, subtitle2: "Next up: carrots on May 15th"),
+    CardDefinition("Plan", "36m2 available", "plan.jpg", "plan", false, getCarrotsPlanted: getCarrotsPlanted, toggleCarrotsPlanted: toggleCarrotsPlanted, subtitle2: "34m2 available"),
+    CardDefinition("Recipes", "Why not try dauphinoise potatoes?", "recipe.jpg", "recipes", true, getCarrotsPlanted: getCarrotsPlanted, subtitle2: "Why not try carrot cake?"),
     CardDefinition("Environmental Impact", "How's my carbon footprint?", "env_imp.jpg", "environmental_impact", false)];
   }
 

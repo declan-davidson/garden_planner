@@ -56,11 +56,24 @@ List<ExpandedCardListItem> getListItems(card){
 
 class CardDefinition {
   String title, subtitle, imagePath, id;
+  late String subtitle1;
+  String? subtitle2;
   bool expandable;
   bool Function()? getCarrotsPlanted;
   VoidCallback? toggleCarrotsPlanted;
 
-  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable, {this.getCarrotsPlanted, this.toggleCarrotsPlanted});
+  void setSubtitleByContext(){
+    if(getCarrotsPlanted != null && getCarrotsPlanted!()){
+      subtitle = subtitle2!;
+    }
+    else{
+      subtitle = subtitle1;
+    }
+  }
+
+  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable, {this.getCarrotsPlanted, this.toggleCarrotsPlanted, this.subtitle2}){
+    subtitle1 = subtitle;
+  }
 }
 
 class ExpandedCard extends StatelessWidget {
@@ -121,6 +134,8 @@ class ExpandedCard extends StatelessWidget {
 
 GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
   var onTap = () => Navigator.push(context, PageTransition(child: _PlaceHolderPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
+
+  card.setSubtitleByContext();
 
   List<Widget> cardBody = [
     Image.asset(card.imagePath, height: 128, width: double.infinity, fit: BoxFit.fitWidth),
