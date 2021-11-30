@@ -72,8 +72,8 @@ class _ExchangeState extends State<Exchange>{
               children: [
                 Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                 const ListTile(
-                  title: Text("Vegetable", style: TextStyle(fontWeight: FontWeight.bold)), 
-                  subtitle: Text("Specific location")
+                  title: Text("Tomatoes", style: TextStyle(fontWeight: FontWeight.bold)), 
+                  subtitle: Text("Partick")
                 )
               ]
             )
@@ -88,8 +88,8 @@ class _ExchangeState extends State<Exchange>{
               children: [
                 Image.asset("harvest.jpg", height: 128, width: double.infinity, fit: BoxFit.fitWidth),
                 const ListTile(
-                  title: Text("Another vegetable", style: TextStyle(fontWeight: FontWeight.bold)), 
-                  subtitle: Text("Specific location 2")
+                  title: Text("Leeks", style: TextStyle(fontWeight: FontWeight.bold)), 
+                  subtitle: Text("Bearsden")
                 )
               ]
             )
