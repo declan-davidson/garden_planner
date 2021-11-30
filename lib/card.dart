@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:garden_planner/environment_info.dart';
+import 'package:garden_planner/environment_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'plan.dart';
 
@@ -56,7 +56,7 @@ List<ExpandedCardListItem> getListItems(card){
 }
 
 // > Marty
-import 'package:garden_planner/environment_page.dart';
+
 
 class CardDefinition {
   String title, subtitle, imagePath, id;
