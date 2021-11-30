@@ -1,16 +1,83 @@
 import 'package:flutter/material.dart';
 //import 'package:garden_planner/environment_info.dart';
 import 'package:page_transition/page_transition.dart';
+import 'plan.dart';
+
+class ExpandedCardListItem {
+  late Text title, subtitle;
+  late Icon icon;
+
+  ExpandedCardListItem(String title, String subtitle, String iconPath){
+    this.title = Text(title);
+    this.subtitle = Text(subtitle);
+    icon = const Icon(Icons.agriculture_sharp);
+  }
+}
+
+List<ExpandedCardListItem> getListItems(card){
+  List<ExpandedCardListItem> listItems = [];
+
+  List<ExpandedCardListItem> noCarrotHarvestItems = [
+    ExpandedCardListItem("Potatoes", "Harvest on June 1st", "somePath")
+  ];
+
+  List<ExpandedCardListItem> noCarrotRecipeItems = [
+    ExpandedCardListItem("Dauphinoise potatoes", "Requires potatoes", "somePath"),
+    ExpandedCardListItem("Potato and leek soup", "Requires potatoes, leeks", "somePath")
+  ];
+
+  List<ExpandedCardListItem> carrotHarvestItems = [
+    ExpandedCardListItem("Carrots", "Harvest on May 15th", "somePath")
+  ] + noCarrotHarvestItems;
+
+  List<ExpandedCardListItem> carrotRecipeItems = [
+    ExpandedCardListItem("Carrot cake", "Requires carrots", "somePath"),
+    ExpandedCardListItem("Chicken casserole", "Requires carrots, potatoes", "somePath")
+  ] + noCarrotRecipeItems;
+
+  if(card.id == "harvest"){
+    if(card.getCarrotsPlanted!()){
+      listItems = carrotHarvestItems;
+    }
+    else{
+      listItems = noCarrotHarvestItems;
+    }
+  }
+  else if(card.id == "recipes"){
+    if(card.getCarrotsPlanted!()){
+      listItems = carrotRecipeItems;
+    }
+    else{
+      listItems = noCarrotRecipeItems;
+    }
+  }
+
+  return listItems;
+}
 
 // > Marty
 import 'package:garden_planner/environment_page.dart';
 
 class CardDefinition {
-  String title, subtitle, imagePath;
-  int id;
+  String title, subtitle, imagePath, id;
+  late String subtitle1;
+  String? subtitle2;
   bool expandable;
+  bool Function()? getCarrotsPlanted;
+  VoidCallback? toggleCarrotsPlanted;
 
-  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable);
+  void setSubtitleByContext(){
+    if(getCarrotsPlanted != null && getCarrotsPlanted!()){
+      subtitle = subtitle2!;
+    }
+    else{
+      subtitle = subtitle1;
+    }
+  }
+
+  CardDefinition(this.title, this.subtitle, this.imagePath, this.id, this.expandable, {this.getCarrotsPlanted, this.toggleCarrotsPlanted, this.subtitle2}){
+    subtitle1 = subtitle;
+  }
 }
 
 class ExpandedCard extends StatelessWidget {
@@ -20,6 +87,8 @@ class ExpandedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
+    List<ExpandedCardListItem> listItems = getListItems(card);
+    
     //A structural widget that displays full screen minus OS items like the status bar
     return SafeArea(
       child: Scaffold(
@@ -33,7 +102,7 @@ class ExpandedCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Hero(
-                tag: "${card.id}",
+                tag: card.id,
                 child: Image.asset(card.imagePath, scale: 1.0, repeat: ImageRepeat.noRepeat, fit: BoxFit.fitWidth, height: MediaQuery.of(context).size.height / 5)
               ),
               ListTile(
@@ -44,9 +113,20 @@ class ExpandedCard extends StatelessWidget {
                 height: 20,
                 thickness: 1
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text("Some details here", style: TextStyle(fontSize: 25))
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: listItems.length,
+                  itemBuilder: (BuildContext c, int i) {
+                    return ListTile(
+                      title: listItems[i].title,
+                      subtitle: listItems[i].subtitle,
+                      leading: listItems[i].icon
+                    );
+                  }
+                )
               )
             ]
           )
@@ -58,6 +138,9 @@ class ExpandedCard extends StatelessWidget {
 
 GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
   var onTap = () => Navigator.push(context, PageTransition(child: _PlaceHolderPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
+
+  card.setSubtitleByContext();
+
   List<Widget> cardBody = [
     Image.asset(card.imagePath, height: 128, width: double.infinity, fit: BoxFit.fitWidth),
     ListTile(
@@ -71,22 +154,19 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
 
     //Have card use Hero transition
     cardBody[0] = Hero(
-        tag: "${card.id}",
+        tag: card.id,
         child: Image.asset(card.imagePath, height: 128, width: double.infinity, fit: BoxFit.fitWidth)
     );
   }
 
-  // > Marty
-  if(card.title == "Environmental Impact"){
 
+  if(card.title == "Environmental Impact"){
     onTap = () => Navigator.push(context, PageTransition(child: EnvironmentPage(), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
     //onTap = () => Navigator.push(context, MaterialPageRoute(builder: (context) => InteractiveGraph() ));
+  }
 
-    // //Have card use Hero transition
-    // cardBody[0] = Hero(
-    //     tag: "${card.id}",
-    //     child: Image.asset(card.imagePath, height: 128, width: double.infinity, fit: BoxFit.fitWidth)
-    // );
+  if(card.id == "plan"){
+    onTap = () => Navigator.push(context, PageTransition(child: PlanPage(card), type: PageTransitionType.rightToLeft, duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)));
   }
 
   return GestureDetector(
@@ -100,12 +180,12 @@ GestureDetector createTappableCard(BuildContext context, CardDefinition card) {
         )
       )
     ),
-    onTap: onTap
+    onTap: onTap,
   );
 }
 
 class _PlaceHolderPage extends StatelessWidget{
-  const _PlaceHolderPage({Key? key}) : super(key: key);
+  _PlaceHolderPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context){
@@ -114,7 +194,8 @@ class _PlaceHolderPage extends StatelessWidget{
         title: const Text("Placeholder"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
-      )
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () => {})
     );
   }
 }
